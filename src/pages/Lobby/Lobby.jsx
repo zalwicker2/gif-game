@@ -6,6 +6,7 @@ export default function Lobby() {
     const { lobbyId, name } = location.state ?? {}
 
     const [messages, setMessages] = useState([]);
+    const [playerList, setPlayerList] = useState([])
 
     const socket = useRef();
 
@@ -13,9 +14,16 @@ export default function Lobby() {
         let ws = new WebSocket('ws://localhost:5000/lobby/' + lobbyId + '/?name=' + name )
         ws.onmessage = function (event) {
             const response = event;
-            console.log(response);
             const data = JSON.parse(response.data);
-            setMessages(m => [...m, data])
+            console.log(data);
+            switch(data.action) {
+                case 'CHAT_MESSAGE':
+                    setMessages(m => [...m, data])
+                    break;
+                case 'UPDATE_PLAYER_LIST':
+                    setPlayerList(data.player_list);
+                    break;
+            }
         }
         socket.current = ws;
     }, [])
@@ -27,6 +35,9 @@ export default function Lobby() {
 
     return (
         <>
+            <div>Players
+                {playerList.map(p => p.name)}
+            </div>
             <div>LOBBY CODE: <input type="text" value={lobbyId} disabled /></div>
             <div>
                 <form action="" onSubmit={SendMessage}>
