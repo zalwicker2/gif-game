@@ -3,19 +3,19 @@ import { useLocation } from "react-router-dom";
 
 export default function Lobby() {
     const location = useLocation();
-    const { lobbyId } = location.state ?? {}
+    const { lobbyId, name } = location.state ?? {}
 
     const [messages, setMessages] = useState([]);
 
     const socket = useRef();
 
     useEffect(() => {
-        let ws = new WebSocket('ws://localhost:5000/lobby/' + lobbyId )
+        let ws = new WebSocket('ws://localhost:5000/lobby/' + lobbyId + '/?name=' + name )
         ws.onmessage = function (event) {
             const response = event;
             console.log(response);
             const data = JSON.parse(response.data);
-            setMessages(m => [...m, data.message])
+            setMessages(m => [...m, data])
         }
         socket.current = ws;
     }, [])
@@ -35,7 +35,7 @@ export default function Lobby() {
                     <button>Send</button>
                 </form>
                 <div>
-                    {messages.map(m => <p>{m}</p>)}
+                    {messages.map(m => <p><span className="sender">{m.sender}:</span> {m.message}</p>)}
                 </div>
             </div>
         </>
