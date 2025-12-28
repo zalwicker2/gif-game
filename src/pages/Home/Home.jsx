@@ -3,6 +3,8 @@ import { useAppContext } from "../../context/AppContext";
 import useGame from "../../hooks/useGame";
 
 export default function Home() {
+    const [generatedCode, setGeneratedCode] = useState(null);
+    const [code, setCode] = useState('');
     const navigate = useNavigate();
 
     const { CreateLobby } = useGame();
@@ -13,7 +15,7 @@ export default function Home() {
 
     function GenerateLobby() {
         CreateLobby().then(code => {
-            JoinLobby(code);
+            setGeneratedCode(code)
         })
     }
 
@@ -26,7 +28,10 @@ export default function Home() {
     return (
         <>
             <form onSubmit={JoinLobbyFromForm}>
-                <input type="text" name="id"/>
+                <div className="form-group">
+                    <label htmlFor="">Lobby Code</label>
+                    <input type="text" name="id" disabled={generatedCode != null} onInput={(e) => setCode(e.target.value)} value={generatedCode ?? code} />
+                </div>
                 <div className="form-group">
                 </div>
                 <button>Join</button>
