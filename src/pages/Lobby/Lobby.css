@@ -1,0 +1,76 @@
+.lobby-code {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: .5rem 1.5rem;
+    font-size: 2.5rem;
+}
+
+.lobby-code span {
+    font-size: .9rem;
+    position: absolute;
+    top: 0;
+    right: 50%;
+
+    text-align: center;
+    text-wrap: nowrap;
+    background-color: #242424;
+    padding: 0 .5rem;
+    transform: translate(50%, -50%);
+}
+.lobby-bottom-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid gray;
+    height: 24rem;
+}
+
+.players-list {
+    width: 20rem;
+    padding: 1rem 2rem;
+    border-right: 1px solid gray;
+}
+
+.players-list span {
+    font-size: 1.5rem;
+}
+
+.players-list ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.chat-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sent-messages {
+    flex: 1;
+    text-align: left;
+    overflow: auto;
+    padding: 0 1rem;
+}
+
+.chat-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.chat-input input {
+    padding: .5rem;
+    flex: 1;
+}
+
+.sender {
+    font-weight: 600;
+}

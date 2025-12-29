@@ -1,3 +1,4 @@
+import './Lobby.css'
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -35,18 +36,25 @@ export default function Lobby() {
 
     return (
         <>
-            <div>Players
-                {playerList.map(p => p.name)}
+            <div className="lobby-code">
+                <span>Lobby Code</span>
+                {lobbyId}
             </div>
-            <div>LOBBY CODE: <input type="text" value={lobbyId} disabled /></div>
-            <div>
-                <form action="" onSubmit={SendMessage}>
-
-                    <input type="text" name="message" />
-                    <button>Send</button>
-                </form>
-                <div>
-                    {messages.map(m => <p><span className="sender">{m.sender}:</span> {m.message}</p>)}
+            <div className="lobby-bottom-bar">
+                <div className="players-list">
+                    <span>Players</span>
+                    <ul>
+                        {playerList?.map(p => <li className={'player' + (p.disconnected ? 'disconnected': '')}>{p.name}</li> )}
+                    </ul>
+                </div>
+                <div className="chat-box">
+                    <div className='sent-messages'>
+                        {messages.map(m => <p><span className="sender">[{m.sender}]:</span> {m.message}</p>)}
+                    </div>
+                    <form className='chat-input' action="" onSubmit={SendMessage}>
+                        <input type="text" name="message" autoComplete='off' />
+                        <button>Send</button>
+                    </form>
                 </div>
             </div>
         </>
